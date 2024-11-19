@@ -80,33 +80,33 @@ def generate_pie_chart(counts, sel_cities):
         st.warning("No data available for the selected criteria.")
         return
 
-    figure()
+    plt.figure()
     #blow out the city with the highest skyscraper count
     explodes = [0 for i in range(len(counts))]
     if len(counts) > 0:
         maximum = counts.index(np.max(counts))
         explodes[maximum] = 0.25
     #create pie chart
-    pie(counts, labels=sel_cities, explode=explodes, autopct="%.2f")
-    title(f"Skyscraper Distribution: {', '.join(sel_cities)}")
+    plt.pie(counts, labels=sel_cities, explode=explodes, autopct="%.2f")
+    plt.title(f"Skyscraper Distribution: {', '.join(sel_cities)}")
 
     return plt
 
 #bar chat
 def generate_bar_chart(dict_averages):
-    figure()
+    plt.figure()
     x = list(dict_averages.keys())
     y = list(dict_averages.values())
 
     # create bar chart
-    fig, ax = subplots()
+    fig, ax = plt.subplots()
     ax.bar(x, y, color='skyblue')
     ax.set_xlabel("Cities")
     ax.set_ylabel("Average Height (ft)")
     ax.set_title("Average Heights of Skyscrapers by City")
 
     #rotate the x-axis labels
-    xticks(rotation=45)
+    plt.xticks(rotation=45)
 
     return plt
 
@@ -178,7 +178,7 @@ def compare_graphs(data, city):
                                                                                 ascending=True).head(5)
 
     #Create two subplots for the bar charts in a vertical arrangement
-    chart, (ax1, ax2) = subplots(2, 1, figsize=(12, 10))  # 2 rows, 1 column layout
+    chart, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))  # 2 rows, 1 column layout
 
     #plot the 5 tallest skyscrapers
     ax1.barh(tallest_skyscrapers['name'], tallest_skyscrapers['statistics.height'], color='blue')
@@ -199,7 +199,7 @@ def compare_graphs(data, city):
     ax2.tick_params(axis='y', labelrotation=45)
 
     #adjust spacing between the plots
-    tight_layout()
+    plt.tight_layout()
 
     #display the graphs
     st.pyplot(chart)
