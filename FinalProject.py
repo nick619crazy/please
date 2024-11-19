@@ -1,3 +1,18 @@
+"""
+Class: CS230--Section XXX
+Name: Nick Peterson
+Description: A program that takes in a CSV file of Skyscrapers and reads the data
+then allows the user to select cities and make customized charts based on the
+cities they selected.
+
+By submitting this assignment, I certify that:
+I have completed this programming assignment independently.
+I have not copied the code from a student or any source.
+I have not shared my code with any student.
+Here is documentation for any outside assistance from AI or other sources.
+"""
+
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -150,7 +165,7 @@ def generate_map(df):
 
     #set up the map using Deck with a map style and layers
     map = pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v9",  #using the 'light' map style for clarity
+        map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view_state,
         layers=[icon_layer],  #use the IconLayer
         tooltip={"html": "<b>{name}</b>", "style": {"backgroundColor": "steelblue", "color": "white"}}  # Tooltip showing the city name
@@ -172,33 +187,28 @@ def compare_graphs(data, city):
     #get the top 5 tallest skyscrapers (sorted by height, descending)
     tallest_skyscrapers = city_data[['name', 'statistics.height']].sort_values(by='statistics.height',
                                                                                 ascending=False).head(5)
-
     #get the top 5 shortest skyscrapers (sorted by height, ascending)
     shortest_skyscrapers = city_data[['name', 'statistics.height']].sort_values(by='statistics.height',
                                                                                 ascending=True).head(5)
-
-    #Create two subplots for the bar charts in a vertical arrangement
-    chart, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))  # 2 rows, 1 column layout
+    #create two subplots for the bar charts in a vertical arrangement
+    chart, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
+    # 2 rows, 1 column layout for the 2 plots
 
     #plot the 5 tallest skyscrapers
     ax1.barh(tallest_skyscrapers['name'], tallest_skyscrapers['statistics.height'], color='blue')
     ax1.set_title(f"5 Tallest Skyscrapers in {city}")
     ax1.set_xlabel("Height (ft)")
     ax1.set_ylabel("Skyscraper Name")
-
-    #Rotate y-axis labels for readability
+    #rotate y-axis labels for readability
     ax1.tick_params(axis='y', labelrotation=45)
 
-    #Plot the 5 shortest skyscrapers
+    #plot the 5 shortest skyscrapers
     ax2.barh(shortest_skyscrapers['name'], shortest_skyscrapers['statistics.height'], color='red')
     ax2.set_title(f"5 Shortest Skyscrapers in {city}")
     ax2.set_xlabel("Height (ft)")
     ax2.set_ylabel("Skyscraper Name")
-
-    #Rotate y-axis labels for readability
+    #rotate y-axis labels for readability
     ax2.tick_params(axis='y', labelrotation=45)
-
-    #adjust spacing between the plots
     plt.tight_layout()
 
     #display the graphs
